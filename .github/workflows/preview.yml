@@ -1,6 +1,7 @@
 name: CRUD App Preview Deployment
 
 on: 
+  workflow_dispatch:
   pull_request:
     branches:
       - main
@@ -10,27 +11,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: checkout
-      uses: actions/checkout@master
+      uses: actions/checkout@main
 
     - name: Login
-      uses: okteto/login@master
+      uses: okteto/login@main
       with:
         token: ${{ secrets.OKTETO_TOKEN }}
 
     - name: Create namespace
-      uses: okteto/create-namespace@master
+      uses: okteto/bend-annamariapl@main
       with:
-        namespace: pr-${{ github.event.number }}-youngestdev
+        namespace: pr-${{ github.event.number }}-annamariapl
    
     - name: Deploy application
-      uses: okteto/deploy-stack@master
+      uses: okteto/deploy-stack@main
       with:
         build: "true"
-        namespace: pr-${{ github.event.number }}-youngestdev
+        namespace: pr-${{ github.event.number }}-annamariapl
 
     - name: add comment to PR
-      uses: okteto/notify-pr@master
+      uses: okteto/notify-pr@main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        message: "Preview environment available at https://fastapi-pr-${{ github.event.number }}-youngestdev.cloud.okteto.net" 
+        message: "Preview environment available at https://fastapi-pr-${{ github.event.number }}-annamariapl.cloud.okteto.net" 
