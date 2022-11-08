@@ -1,4 +1,3 @@
-name: fastapi-crud
 services:
   fastapi:
     build: .
@@ -8,8 +7,10 @@ services:
       - DB_HOST=mongodb://mongodb:27017
       - secret=dev
   mongodb:
-    image: annamariapl/fastapi-crud:latest
+    image: bitnami/mongodb:latest
     ports:
       - 27017
     volumes:
-      - /annamariapl/mongodb
+      - data:/bitnami/mongodb
+volumes:
+  data:
