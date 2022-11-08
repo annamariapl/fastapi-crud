@@ -3,24 +3,32 @@ from typing import Optional, List
 
 class RecipeSchema(BaseModel):
     name: str = Field(...)
-    ingredients: List[str] = Field(...)
+    noGoPlaces: List[str] = Field(...)
+    noGoTags: List[str] = Field(...)
+    mustTags: List[str] = Field(...)
 
     class Config:
         schema_extra = {
             "example": {
-                "name": "Donuts",
-                "ingredients": ["Flour", "Milk", "Sugar", "Vegetable Oil"]
+                "name": "Daniel",
+                "noGoTags": ["asian"],
+                "noGoPlaces": ["Taka Fish House | Kotti"],
+                "mustTags":["has-sitting-places"]
             }
         }
 
 class UpdateRecipeSchema(BaseModel):
     name: Optional[str]
-    ingredients: Optional[List[str]]
+    noGoPlaces: Optional[List[str]]
+    noGoTags: Optional[List[str]]
+    mustTags: Optional[List[str]]
 
     class Config:
         schema_extra = {
-            "example": {
-                "name": "Buns",
-                "ingredients": ["Flour", "Milk", "Sugar", "Vegetable Oil"]
+           "example": {
+                "name": "Axel",
+                "noGoTags": ["asian"],
+                "noGoPlaces": ["Taka Fish House | Kotti"],
+                "mustTags":["has-sitting-places"]
             }
         }

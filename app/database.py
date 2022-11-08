@@ -6,43 +6,45 @@ connection_details = config("DB_HOST")
 
 client = MongoClient(connection_details)
 
-database = client.recipes
+database = client.people
 
-recipe_collection = database.get_collection('recipes_collection')
+person_collection = database.get_collection('people_collection')
 
-def parse_recipe_data(recipe) -> dict:
+def parse_person_data(person) -> dict:
     return {
-        "id": str(recipe["_id"]),
-        "name": recipe["name"],
-        "ingredients": recipe["ingredients"]
+        "id": str(person["_id"]),
+        "name": person["name"],
+        "noGoTags": person["noGoTags"],
+        "mustTags": person["mustTags"],
+        "noGoPlaces": person["noGoPlaces"]
     }
 
-def save_recipe(recipe_data: dict) -> dict:
-    recipe = recipe_collection.insert_one(recipe_data).inserted_id
+def save_person(person_data: dict) -> dict:
+    person = person_collection.insert_one(person_data).inserted_id
     return {
-        "id": str(recipe)
+        "id": str(person)
     }
 
-def get_single_recipe(id: str) -> dict:
-    recipe = recipe_collection.find_one({"_id": ObjectId(id)})
-    if recipe:
-        return parse_recipe_data(recipe)
+def get_single_person(id: str) -> dict:
+    person = person_collection.find_one({"_id": ObjectId(id)})
+    if person:
+        return parse_person_data(person)
 
-def get_all_recipes() -> list:
-    recipes = []
-    for recipe in recipe_collection.find():
-        recipes.append(parse_recipe_data(recipe))
+def get_all_people() -> list:
+    people = []
+    for person in person_collection.find():
+        people.append(parse_person_data(person))
 
-    return recipes
+    return people
 
-def update_recipe_data(id: str, data: dict):
-    recipe = recipe_collection.find_one({"_id": ObjectId(id)})
-    if recipe:
-        recipe_collection.update_one({"_id": ObjectId(id)}, {"$set": data})
+def update_person_data(id: str, data: dict):
+    person = person_collection.find_one({"_id": ObjectId(id)})
+    if person:
+        person_collection.update_one({"_id": ObjectId(id)}, {"$set": data})
         return True
 
-def remove_recipe(id: str):
-    recipe = recipe_collection.find_one({"_id": ObjectId(id)})
-    if recipe:
-        recipe_collection.delete_one({"_id": ObjectId(id)})
+def remove_person(id: str):
+    person = person_collection.find_one({"_id": ObjectId(id)})
+    if person:
+        person_collection.delete_one({"_id": ObjectId(id)})
         return True
