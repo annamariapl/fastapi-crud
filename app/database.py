@@ -6,9 +6,9 @@ connection_details = config("DB_HOST")
 
 client = MongoClient(connection_details)
 
-database = client.people
+database = client.persons
 
-person_collection = database.get_collection('people_collection')
+person_collection = database.get_collection('persons_collection')
 
 def parse_person_data(person) -> dict:
     return {
@@ -30,12 +30,12 @@ def get_single_person(id: str) -> dict:
     if person:
         return parse_person_data(person)
 
-def get_all_people() -> list:
-    people = []
+def get_all_persons() -> list:
+    persons = []
     for person in person_collection.find():
-        people.append(parse_person_data(person))
+        persons.append(parse_person_data(person))
 
-    return people
+    return persons
 
 def update_person_data(id: str, data: dict):
     person = person_collection.find_one({"_id": ObjectId(id)})

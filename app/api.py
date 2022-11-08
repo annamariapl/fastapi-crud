@@ -2,7 +2,7 @@ from fastapi import FastAPI, Body
 from fastapi.encoders import jsonable_encoder
 
 from app.model import PersonSchema, UpdatePersonSchema
-from app.database import save_person, get_all_people, get_single_person, update_person_data, remove_person
+from app.database import save_person, get_all_persons, get_single_person, update_person_data, remove_person
 
 app = FastAPI()
 
@@ -13,10 +13,10 @@ def get_root() -> dict:
     }
 
 @app.get("/person", tags=["Person"])
-def get_people() -> dict:
-    people = get_all_people()
+def get_persons() -> dict:
+    persons = get_all_persons()
     return {
-        "data": people
+        "data": persons
     }
 
 @app.get("/person/{id}", tags=["Person"])

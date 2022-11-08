@@ -1,7 +1,7 @@
 from pydantic import BaseModel, Field
 from typing import Optional, List
 
-class RecipeSchema(BaseModel):
+class PersonSchema(BaseModel):
     name: str = Field(...)
     noGoPlaces: List[str] = Field(...)
     noGoTags: List[str] = Field(...)
@@ -17,7 +17,7 @@ class RecipeSchema(BaseModel):
             }
         }
 
-class UpdateRecipeSchema(BaseModel):
+class UpdatePersonSchema(BaseModel):
     name: Optional[str]
     noGoPlaces: Optional[List[str]]
     noGoTags: Optional[List[str]]
